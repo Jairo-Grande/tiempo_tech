@@ -1,0 +1,4 @@
+baseUrl: "https://images-api.nasa.gov/search"
+connectTimeOut: 120000
+receiveTimeOut: 120000
+

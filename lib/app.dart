@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:tiempo_tech/utils/constants.dart';
+import 'package:tiempo_tech/utils/routes.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      title: 'tiempo-tech-api',
+      debugShowCheckedModeBanner: false,
+      routes: appRoutes,
+      initialRoute: Routes.home,
     );
   }
 }
