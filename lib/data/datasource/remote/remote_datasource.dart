@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:tiempo_tech/data/model/nasa_result_model.dart';
 import 'package:tiempo_tech/data/exception.dart';
-import 'package:tiempo_tech/utils/constants.dart';
 
 class RemoteDataSource {
   late Dio _client;
@@ -17,7 +16,7 @@ class RemoteDataSource {
         responseType: ResponseType.json,
         headers: {'Content-Type': 'application/json', 'accept': '*/*'});
 
-    _client = Dio();
+    _client = Dio(optionsApi);
   }
 
   addInterceptor(Interceptor interceptor) {
@@ -33,16 +32,20 @@ class RemoteDataSource {
     }));
   }
 
-  Future<NasaResult> getNasaResults({required String? query}) async {
+  Future<NasaData> getNasaResults({required String? query}) async {
     try {
       final Map<String, dynamic> queryParams = {'q': query ?? ''};
-      final apiResponse = await _client.get(
-        Path.apiUrl,
+      final apiResponse = await _client
+          .get(
+        '/search',
         queryParameters: queryParams,
-      );
+      )
+          .catchError((error) {
+        return error.response;
+      });
 
       if (apiResponse.statusCode == 200) {
-        return NasaResult.fromJson(apiResponse.data);
+        return NasaData.fromJson(apiResponse.data);
       } else {
         throw ServerException();
       }

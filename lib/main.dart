@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiempo_tech/app.dart';
-import 'dependency_injection/injection.dart' as dependencyInjection;
+import 'package:tiempo_tech/bloc/bloc/nasa_bloc.dart';
+import 'package:tiempo_tech/bloc/favorite/favorites_bloc.dart';
+import 'package:tiempo_tech/dependency_injection/injection.dart' as dep_iny;
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  dependencyInjection.init();
-  runApp(const MainApp());
+  await dep_iny.init();
+
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (_) => dep_iny.locator<FavoritesBloc>()),
+    BlocProvider(create: (_) => dep_iny.locator<NasaBloc>()),
+  ], child: const MainApp()));
 }

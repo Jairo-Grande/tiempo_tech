@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:either_dart/either.dart';
-import 'package:tiempo_tech/data/datasource/remote_datasource.dart';
+import 'package:tiempo_tech/data/datasource/remote/remote_datasource.dart';
 import 'package:tiempo_tech/data/exception.dart';
 import 'package:tiempo_tech/data/failure.dart';
 import 'package:tiempo_tech/data/model/nasa_result_model.dart';
@@ -13,7 +13,7 @@ class NasaRepositoryImpl implements NasaRepository {
   NasaRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, NasaResult>> getNasaResult({String? query}) async {
+  Future<Either<Failure, NasaData>> getNasaResult({String? query}) async {
     try {
       final result = await remoteDataSource.getNasaResults(query: query);
       return Right(result);
